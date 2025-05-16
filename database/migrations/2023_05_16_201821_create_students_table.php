@@ -12,8 +12,17 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('students', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_estudiante');
+            $table->string('nombres');
+            $table->string('apellidos');
+            $table->string('documento');
+            $table->string('grado');
+            $table->date('fecha_inicio');
+            $table->boolean('servicio_completado')->default('0');
+            $table->unsignedBigInteger('id_usuario_admin');
             $table->timestamps();
+
+            $table->foreign('id_usuario_admin')->reference('id')->on('admins')->onDelete('cascade');
         });
     }
 

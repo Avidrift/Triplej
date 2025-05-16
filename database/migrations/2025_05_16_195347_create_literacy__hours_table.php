@@ -12,8 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('literacy__hours', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_hora_alfabetizacion');
+            $table->unsignedBigInteger('id_estudiante');
+            $table->unsignedBigInteger('id_docente');
+            $table->unsignedBigInteger('id_zona');
+            $table->dateTime('fecha_hora_inicio');
+            $table->dateTime('fecha_hora_fin');
+            $table->boolean('validada')->default('1');
+            $table->text('observaciones');
             $table->timestamps();
+
+            $table->foreign('id_estudiante')->reference('id')->on('students')->onDelete('cascade');
+            $table->foreign('id_docente')->reference('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('id_zona')->reference('id')->on('zones')->onDelete('cascade');
         });
     }
 
