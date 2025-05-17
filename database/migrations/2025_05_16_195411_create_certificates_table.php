@@ -15,13 +15,13 @@ return new class extends Migration
             $table->id('id_certificado');
             $table->unsignedBigInteger('id_estudiante');
             $table->unsignedBigInteger('id_usuario_admin');
-            $table->dateTimes('fecha_expedicion');
+            $table->dateTime('fecha_expedicion');
             $table->integer('horas_totales');
             $table->boolean('entregado')->default('0');
             $table->timestamps();
 
-            $table->foreign('id_estudiante')->reference('id')->on('students')->onDelete('cascade');
-            $table->foreign('id_usuario_admin')->reference('id')->on('admins')->onDelete('cascade');
+            $table->foreign('id_estudiante')->references('id_estudiante')->on('students')->onDelete('cascade');
+            $table->foreign('id_usuario_admin')->references('id_usuario_admin')->on('admins')->onDelete('cascade');
         });
     }
 

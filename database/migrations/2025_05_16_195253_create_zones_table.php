@@ -15,11 +15,11 @@ return new class extends Migration
             $table->id('id_zona');
             $table->unsignedBigInteger('id_empresa');
             $table->string('nombre');
-            $table->text('descripcion')->nullable;
+            $table->text('descripcion')->nullable();
             $table->boolean('activo')->default('1');
             $table->timestamps();
 
-            $table->foreign('id_empresa')->reference('id')->on('companies')->onDelete('cascade');  
+            $table->foreign('id_empresa')->references('id_empresa')->on('companies')->onDelete('cascade');  
         });
     }
 
