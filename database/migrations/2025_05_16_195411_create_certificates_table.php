@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('certificates', function (Blueprint $table) {
-            $table->id('id_certificado');
+            $table->id();
             $table->unsignedBigInteger('id_estudiante');
             $table->unsignedBigInteger('id_usuario_admin');
             $table->dateTime('fecha_expedicion');
@@ -20,8 +20,8 @@ return new class extends Migration
             $table->boolean('entregado')->default('0');
             $table->timestamps();
 
-            $table->foreign('id_estudiante')->references('id_estudiante')->on('students')->onDelete('cascade');
-            $table->foreign('id_usuario_admin')->references('id_usuario_admin')->on('admins')->onDelete('cascade');
+            $table->foreign('id_estudiante')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('id_usuario_admin')->references('id')->on('admins')->onDelete('cascade');
         });
     }
 

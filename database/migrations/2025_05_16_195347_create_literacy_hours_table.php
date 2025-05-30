@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('literacy_hours', function (Blueprint $table) {
-            $table->id('id_hora_alfabetizacion');
+            $table->id();
             $table->unsignedBigInteger('id_estudiante');
             $table->unsignedBigInteger('id_docente');
             $table->unsignedBigInteger('id_zona');
@@ -22,9 +22,9 @@ return new class extends Migration
             $table->text('observaciones');
             $table->timestamps();
 
-            $table->foreign('id_estudiante')->references('id_estudiante')->on('students')->onDelete('cascade');
-            $table->foreign('id_docente')->references('id_docente')->on('teachers')->onDelete('cascade');
-            $table->foreign('id_zona')->references('id_zona')->on('zones')->onDelete('cascade');
+            $table->foreign('id_estudiante')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('id_docente')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('id_zona')->references('id')->on('zones')->onDelete('cascade');
         });
     }
 

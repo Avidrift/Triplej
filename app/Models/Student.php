@@ -9,6 +9,17 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Student extends Model
 {
+     protected $fillable  = [
+        'nombres',
+        'apellidos',
+        'documento',
+        'grado',
+        'fecha_inicio',
+        'servicio_completado',
+        'id_usuario_admin',
+    ];
+
+
     public function admin(): BelongsTo
     {
         return $this->belongsTo(Admin::class);

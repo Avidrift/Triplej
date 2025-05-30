@@ -1,5 +1,4 @@
 <?php
-// App/Models/Admin.php (hereda de User)
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Relations\HasMany;
