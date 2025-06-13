@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_empresa');
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
-            $table->boolean('activo')->default('1');
+            $table->unsignedBigInteger('id_company');
+            $table->string('name');
+            $table->text('description')->nullable();
+            $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->timestamps();
 
-            $table->foreign('id_empresa')->references('id')->on('companies')->onDelete('cascade');  
+            $table->foreign('id_company')->references('id')->on('companies')->onDelete('cascade');  
         });
     }
 

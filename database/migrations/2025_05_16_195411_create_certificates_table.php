@@ -13,15 +13,13 @@ return new class extends Migration
     {
         Schema::create('certificates', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_estudiante');
-            $table->unsignedBigInteger('id_usuario_admin');
-            $table->dateTime('fecha_expedicion');
-            $table->integer('horas_totales');
-            $table->boolean('entregado')->default('0');
+            $table->unsignedBigInteger('id_student');
+            $table->dateTime('delivery_date');
+            $table->integer('total_hours');
+            $table->boolean('delivered')->default('0');
             $table->timestamps();
 
-            $table->foreign('id_estudiante')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('id_usuario_admin')->references('id')->on('admins')->onDelete('cascade');
+            $table->foreign('id_student')->references('id')->on('students')->onDelete('cascade');
         });
     }
 

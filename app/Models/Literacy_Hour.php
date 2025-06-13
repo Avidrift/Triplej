@@ -10,13 +10,13 @@ class Literacy_Hour extends Model
     protected $table = 'literacy_hours'; 
     
     protected $fillable = [
-        'id_zona',
-        'id_estudiante', 
-        'id_docente',
-        'fecha_hora_inicio',
-        'fecha_hora_fin',
-        'validada',
-        'observaciones'
+        'id_zone',
+        'id_student', 
+        'id_teacher',
+        'date_time_start',
+        'date_time_end',
+        'validated',
+        'comments'
     ];
 
     public function zone(): BelongsTo

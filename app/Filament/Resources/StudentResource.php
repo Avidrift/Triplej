@@ -23,25 +23,33 @@ class StudentResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('nombres')
+                Forms\Components\TextInput::make('name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('apellidos')
+                Forms\Components\TextInput::make('last_name')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('documento')
+                Forms\Components\TextInput::make('document')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('grado')
+                Forms\Components\TextInput::make('email')
+                    ->email()
                     ->required()
                     ->maxLength(255),
-                Forms\Components\DatePicker::make('fecha_inicio')
+                Forms\Components\DateTimePicker::make('email_verified_at'),
+                Forms\Components\TextInput::make('password')
+                    ->password()
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\TextInput::make('grade')
+                    ->required()
+                    ->maxLength(255),
+                Forms\Components\DatePicker::make('star_date')
                     ->required(),
-                Forms\Components\Toggle::make('servicio_completado')
+                Forms\Components\Toggle::make('complete_service')
                     ->required(),
-                Forms\Components\TextInput::make('id_usuario_admin')
-                    ->required()
-                    ->numeric(),
+                Forms\Components\TextInput::make('status')
+                    ->required(),
             ]);
     }
 
@@ -49,22 +57,25 @@ class StudentResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('nombres')
+                Tables\Columns\TextColumn::make('name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('apellidos')
+                Tables\Columns\TextColumn::make('last_name')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('documento')
+                Tables\Columns\TextColumn::make('document')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('grado')
+                Tables\Columns\TextColumn::make('email')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('fecha_inicio')
+                Tables\Columns\TextColumn::make('email_verified_at')
+                    ->dateTime()
+                    ->sortable(),
+                Tables\Columns\TextColumn::make('grade')
+                    ->searchable(),
+                Tables\Columns\TextColumn::make('star_date')
                     ->date()
                     ->sortable(),
-                Tables\Columns\IconColumn::make('servicio_completado')
+                Tables\Columns\IconColumn::make('complete_service')
                     ->boolean(),
-                Tables\Columns\TextColumn::make('id_usuario_admin')
-                    ->numeric()
-                    ->sortable(),
+                Tables\Columns\TextColumn::make('status'),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

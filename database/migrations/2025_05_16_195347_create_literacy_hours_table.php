@@ -13,18 +13,18 @@ return new class extends Migration
     {
         Schema::create('literacy_hours', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('id_estudiante');
-            $table->unsignedBigInteger('id_docente');
-            $table->unsignedBigInteger('id_zona');
-            $table->dateTime('fecha_hora_inicio');
-            $table->dateTime('fecha_hora_fin');
-            $table->boolean('validada')->default('1');
-            $table->text('observaciones');
+            $table->unsignedBigInteger('id_student');
+            $table->unsignedBigInteger('id_teacher');
+            $table->unsignedBigInteger('id_zone');
+            $table->dateTime('date_time_start');
+            $table->dateTime('date_time_end');
+            $table->boolean('validated')->default('1');
+            $table->text('comments');
             $table->timestamps();
 
-            $table->foreign('id_estudiante')->references('id')->on('students')->onDelete('cascade');
-            $table->foreign('id_docente')->references('id')->on('teachers')->onDelete('cascade');
-            $table->foreign('id_zona')->references('id')->on('zones')->onDelete('cascade');
+            $table->foreign('id_student')->references('id')->on('students')->onDelete('cascade');
+            $table->foreign('id_teacher')->references('id')->on('teachers')->onDelete('cascade');
+            $table->foreign('id_zone')->references('id')->on('zones')->onDelete('cascade');
         });
     }
 
