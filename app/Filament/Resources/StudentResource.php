@@ -90,6 +90,10 @@ class StudentResource extends Resource
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\Action::make('hoja_alfabetizacion')
+                    ->label('Hoja de Alfabetización')
+                    ->url(fn($record) => \App\Filament\Resources\LiteracyHourResource::getUrl('student-sheet', ['record' => $record->id]))
+                    ->icon('heroicon-o-document-text'),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

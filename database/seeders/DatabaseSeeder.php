@@ -19,5 +19,16 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        \App\Models\User::firstOrCreate([
+            'email' => 'admin@demo.com',
+        ], [
+            'name' => 'Administrador',
+            'password' => bcrypt('admin123'),
+            'role' => 'admin',
+        ]);
+
+        // Llamar al seeder de horas de alfabetización
+        $this->call(\Database\Seeders\LiteracyHourSeeder::class);
     }
 }

@@ -39,6 +39,7 @@ class StudentPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                \App\Filament\Student\Widgets\StudentSheetLinkWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -53,6 +54,10 @@ class StudentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->resources([
+                \App\Filament\Resources\LiteracyHourResource::class,
+                // Solo recursos que el estudiante debe ver
             ]);
     }
 }

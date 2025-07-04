@@ -52,6 +52,13 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+            ])
+            ->resources([
+                \App\Filament\Resources\LiteracyHourResource::class,
+                \App\Filament\Resources\StudentResource::class,
+                \App\Filament\Resources\TeacherResource::class,
+                \App\Filament\Resources\CertificateResource::class,
+                // Agrega aquí otros recursos que el admin debe ver
             ]);
     }
 }
