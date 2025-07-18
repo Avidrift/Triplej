@@ -14,7 +14,7 @@
             transition: all 0.5s ease;
             list-style: none;
         }
-        
+
         .nav-links-f.visible {
             opacity: 1;
             visibility: visible;
@@ -32,7 +32,7 @@
     <!-- Header -->
     <header>
         <nav class="container">
-            <a href="/" class="logo">TripleJ respaldo</a>
+            <a href="/" class="logo">TripleJ</a>
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#usuarios">Usuarios</a></li>
@@ -53,6 +53,9 @@
                 </div>
                 <div class="sinicio">
                     <a href="/student" class="btn-primary">Estudiante</a> <br> <br>
+                </div>
+                <div class="sinicio">
+                    <a href="/admin" class="btn-primary">Admin</a> <br> <br>
                 </div>
             </div>
         </div>
