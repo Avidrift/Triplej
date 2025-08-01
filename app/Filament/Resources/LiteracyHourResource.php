@@ -25,8 +25,20 @@ class LiteracyHourResource extends Resource
             ->schema([
                 Forms\Components\Select::make('id_zone')
                     ->label('Zona')
-                    ->relationship('zone', 'name')
-                    ->required(),
+                    ->options(function () {
+                        // Solo mostrar zonas con profesor asignado
+                        return \App\Models\Zone::whereNotNull('id_teacher')->pluck('name', 'id');
+                    })
+                    ->required()
+                    ->reactive()
+                    ->afterStateUpdated(function ($state, callable $set) {
+                        $zone = \App\Models\Zone::find($state);
+                        if ($zone && $zone->teacher) {
+                            $set('id_teacher', $zone->teacher->id);
+                        } else {
+                            $set('id_teacher', null);
+                        }
+                    }),
                 Forms\Components\Select::make('id_student')
                     ->label('Estudiante')
                     ->relationship('student', 'name')
@@ -34,7 +46,8 @@ class LiteracyHourResource extends Resource
                 Forms\Components\Select::make('id_teacher')
                     ->label('Profesor')
                     ->relationship('teacher', 'name')
-                    ->required(),
+                    ->required()
+                    ->readOnly(),
                 Forms\Components\DateTimePicker::make('date_time_start')
                     ->label('Fecha y hora de inicio')
                     ->required(),

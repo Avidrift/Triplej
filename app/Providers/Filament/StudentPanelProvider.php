@@ -39,7 +39,7 @@ class StudentPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                \App\Filament\Student\Widgets\StudentSheetLinkWidget::class,
+                // Eliminado StudentSheetLinkWidget del dashboard
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -58,6 +58,13 @@ class StudentPanelProvider extends PanelProvider
             ->resources([
                 \App\Filament\Resources\LiteracyHourResource::class,
                 // Solo recursos que el estudiante debe ver
+            ])
+            ->navigationItems([
+                \Filament\Navigation\NavigationItem::make('Mi Hoja de Alfabetización')
+                    ->url(fn () => \App\Filament\Resources\LiteracyHourResource::getUrl('student-sheet', ['record' => \Filament\Facades\Filament::auth()?->user()?->id]))
+                    ->icon('heroicon-o-book-open')
+                    ->group('Alfabetización')
+                    ->visible(fn () => \Filament\Facades\Filament::auth()?->user() instanceof \App\Models\Student),
             ]);
     }
 }
