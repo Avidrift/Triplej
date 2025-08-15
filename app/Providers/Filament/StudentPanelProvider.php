@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Resources\StudentLiteracyHourResource;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -29,16 +30,18 @@ class StudentPanelProvider extends PanelProvider
             ->authGuard('student')
             ->brandName('Acceso de Estudiantes')
             ->colors([
-                'primary' => Color::Green,
+                'primary' => Color::Gray,
             ])
             ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\\Filament\\Student\\Resources')
             ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')
             ->pages([
                 Pages\Dashboard::class,
+
             ])
             ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                // \App\Filament\Student\Widgets\StudentSheetLinkWidget::class, // Eliminado para quitar el widget del dashboard
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -53,6 +56,15 @@ class StudentPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->resources($this->getResources());
+    }
+
+    public function getResources(): array
+    {
+        return [
+            StudentLiteracyHourResource::class,
+            // otros recursos para estudiantes
+        ];
     }
 }

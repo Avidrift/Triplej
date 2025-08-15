@@ -447,3 +447,8 @@ footer {
 .close:hover {
     color: black;
 }
+
+
+body {
+    border: 5px solid red !important;
+}

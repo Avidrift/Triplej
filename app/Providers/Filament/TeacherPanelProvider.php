@@ -40,6 +40,13 @@ class TeacherPanelProvider extends PanelProvider
             ->widgets([
                 Widgets\AccountWidget::class,
             ])
+            ->resources([
+                \App\Filament\Resources\LiteracyHourResource::class,
+                \App\Filament\Resources\StudentResource::class,
+                \App\Filament\Resources\TeacherResource::class,
+                \App\Filament\Resources\CertificateResource::class,
+                // Agrega aquí otros recursos que el maestro debe ver
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

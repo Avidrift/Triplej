@@ -54,7 +54,18 @@ class Teacher extends Authenticatable implements FilamentUser
 
     public function literacy_hours(): HasMany
     {
-        return $this->hasMany(Literacy_Hour::class);
+        return $this->hasMany(Literacy_Hour::class, 'id_teacher');
+    }
+
+    // Relación con estudiantes (asumiendo que hay una tabla pivote teacher_student o campo group_id)
+    public function students()
+    {
+        // Si tienes una tabla pivote teacher_student:
+        // return $this->belongsToMany(Student::class, 'teacher_student', 'teacher_id', 'student_id');
+        // Si los estudiantes tienen un campo group_id y el maestro también:
+        // return Student::where('group_id', $this->group_id);
+        // Por ahora, ejemplo con todos los estudiantes:
+        return Student::query();
     }
 
     // Métodos helper

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('companies', function (Blueprint $table) {
             $table->id();
             $table->string('owner');
+            $table->string('name');
            # $table->unsignedBigInteger('id_usuario_admin');
             $table->timestamps();
 

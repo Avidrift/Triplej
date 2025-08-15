@@ -57,7 +57,7 @@ class Student extends Authenticatable implements FilamentUser
 
     public function literacy_hours(): HasMany
     {
-        return $this->hasMany(Literacy_Hour::class);
+        return $this->hasMany(Literacy_Hour::class, 'id_student');
     }
 
     public function certificate(): HasOne
