@@ -19,6 +19,10 @@ class Literacy_Hour extends Model
         'comments'
     ];
 
+    protected $attributes = [
+        'validated' => false,
+    ];
+
     public function student(): BelongsTo
     {
         return $this->belongsTo(Student::class, 'id_student');

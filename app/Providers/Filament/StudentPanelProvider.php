@@ -18,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use Filament\Navigation\NavigationItem;
 
 class StudentPanelProvider extends PanelProvider
 {
@@ -36,12 +37,10 @@ class StudentPanelProvider extends PanelProvider
             ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')
             ->pages([
                 Pages\Dashboard::class,
-
             ])
             ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
-                // \App\Filament\Student\Widgets\StudentSheetLinkWidget::class, // Eliminado para quitar el widget del dashboard
             ])
             ->middleware([
                 EncryptCookies::class,
@@ -58,13 +57,15 @@ class StudentPanelProvider extends PanelProvider
                 Authenticate::class,
             ])
             ->resources($this->getResources());
+
     }
 
     public function getResources(): array
     {
         return [
             StudentLiteracyHourResource::class,
-            // otros recursos para estudiantes
+            \App\Filament\Resources\LiteracyHourResource::class,
+            // otros recursos que el estudiante deba ver
         ];
     }
 }

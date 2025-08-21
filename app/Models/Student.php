@@ -65,6 +65,11 @@ class Student extends Authenticatable implements FilamentUser
         return $this->hasOne(Certificate::class);
     }
 
+    public function teacher(): BelongsTo
+    {
+        return $this->belongsTo(Teacher::class, 'id_teacher');
+    }
+
     // Métodos helper
     public function getNombreCompletoAttribute(): string
     {

@@ -14,12 +14,14 @@ return new class extends Migration
         Schema::create('zones', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('id_company');
+            $table->unsignedBigInteger('id_teacher'); // Relación con profesor
             $table->string('name');
             $table->text('description')->nullable();
             $table->enum('status', ['active', 'inactive', 'suspended'])->default('active');
             $table->timestamps();
 
             $table->foreign('id_company')->references('id')->on('companies')->onDelete('cascade');  
+            $table->foreign('id_teacher')->references('id')->on('teachers')->onDelete('cascade');
         });
     }
 
