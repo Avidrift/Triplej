@@ -8,8 +8,14 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 use App\Http\Controllers\LiteracyHourController;
 
-Route::get('/', function () {
+// Ruta para mostrar home.blade.php
+Route::get('/home', function () {
     return view('home');
+});
+
+// Redirigir raíz a home
+Route::get('/', function () {
+    return redirect('/home');
 });
 
 // Rutas para panel de profesores
