@@ -18,6 +18,7 @@ use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
+use App\Filament\Student\Widgets as Witgets;
 use Filament\Navigation\NavigationItem;
 
 class StudentPanelProvider extends PanelProvider
@@ -41,6 +42,7 @@ class StudentPanelProvider extends PanelProvider
             ->discoverWidgets(in: app_path('Filament/Student/Widgets'), for: 'App\\Filament\\Student\\Widgets')
             ->widgets([
                 Widgets\AccountWidget::class,
+                Witgets\StudentHoursProgressWidget::class,
             ])
             ->middleware([
                 EncryptCookies::class,

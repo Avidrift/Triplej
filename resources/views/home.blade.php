@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TripleJ - Gestión de Horas de Alfabetización</title>
-    <link rel="stylesheet" href="{{ asset('css/mainpage.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
 
     <style>
         .nav-links-f {
@@ -32,7 +32,7 @@
     <!-- Header -->
     <header>
         <nav class="container">
-            <a href="/" class="logo">TripleJ respaldo</a>
+            <a href="/" class="logo">   TripleJ</a>
             <ul class="nav-links">
                 <li><a href="#inicio">Inicio</a></li>
                 <li><a href="#usuarios">Usuarios</a></li>
@@ -65,13 +65,7 @@
                 <h1>Gestión Inteligente de Horas de Alfabetización</h1>
             </div>
             <p>Plataforma segura y eficiente para el registro y seguimiento de horas de servicio social. Diseñada específicamente para instituciones educativas que valoran la precisión y la facilidad de uso.</p>
-            <div class="cta-buttons">
-                <a href="#contacto" class="btn-primary">Solicitar Demo</a>
-            </div>
-            <div class="cta-buttons">
-                <a href="#nosotros" class="btn-secondary">Conocer Más</a>
-            </div>
-        </div>
+            
     </section>
 
     <!-- User Types Section -->

@@ -79,7 +79,20 @@ class LiteracyHourResource extends Resource
                 Tables\Columns\TextColumn::make('comments')->label('Descripción')->limit(30),
             ])
             ->filters([
-                // Puedes agregar filtros personalizados aquí
+                Tables\Filters\SelectFilter::make('hour_type')
+                    ->label('Tipo de Hora')
+                    ->options([
+                        'school' => 'Colegio',
+                        'learning' => 'Aprendizaje',
+                    ]),
+                
+                Tables\Filters\Filter::make('validated')
+                    ->label('Solo Validadas')
+                    ->query(fn ($query) => $query->where('validated', true)),
+                
+                Tables\Filters\Filter::make('not_validated')
+                    ->label('No Validadas')
+                    ->query(fn ($query) => $query->where('validated', false)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()

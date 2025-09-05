@@ -7,20 +7,24 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Literacy_Hour extends Model
 {
-    protected $table = 'literacy_hours'; 
+    // Especificar el nombre exacto de la tabla
+    protected $table = 'literacy_hours'; // Cambia esto por el nombre real de tu tabla
     
     protected $fillable = [
-        'id_zone',
-        'id_student', 
+        'id_student',
         'id_teacher',
+        'id_zone',
         'date_time_start',
         'date_time_end',
+        'comments',
+        'hour_type',
         'validated',
-        'comments'
     ];
 
-    protected $attributes = [
-        'validated' => false,
+    protected $casts = [
+        'date_time_start' => 'datetime',
+        'date_time_end' => 'datetime',
+        'validated' => 'boolean',
     ];
 
     public function student(): BelongsTo
@@ -36,5 +40,22 @@ class Literacy_Hour extends Model
     public function zone(): BelongsTo
     {
         return $this->belongsTo(Zone::class, 'id_zone');
+    }
+
+    // Accessor para obtener la duración en horas
+    public function getDurationHoursAttribute(): float
+    {
+        if ($this->date_time_start && $this->date_time_end) {
+            $start = \Carbon\Carbon::parse($this->date_time_start);
+            $end = \Carbon\Carbon::parse($this->date_time_end);
+            return round($end->diffInMinutes($start) / 60, 1);
+        }
+        return 0;
+    }
+
+    // Accessor para el tipo de hora formateado
+    public function getHourTypeFormattedAttribute(): string
+    {
+        return $this->hour_type === 'school' ? 'Colegio' : 'Aprendizaje Autónomo';
     }
 }
