@@ -53,16 +53,6 @@ class StudentHoursProgressWidget extends Widget
         $schoolProgressPercentage = min(100, ($schoolHours / 80) * 100);
         $learningProgressPercentage = min(100, ($learningHours / 40) * 100);
 
-        // Debug opcional - solo descomenta si necesitas ver los valores
-        // \Log::info('Progress Data:', [
-        //     'totalHours' => $totalHours,
-        //     'schoolHours' => $schoolHours,
-        //     'learningHours' => $learningHours,
-        //     'progressPercentage' => $progressPercentage,
-        //     'schoolProgressPercentage' => $schoolProgressPercentage,
-        //     'learningProgressPercentage' => $learningProgressPercentage,
-        // ]);
-
         return [
             'totalHours' => $totalHours,
             'schoolHours' => $schoolHours,

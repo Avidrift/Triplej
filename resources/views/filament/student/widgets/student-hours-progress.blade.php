@@ -11,10 +11,8 @@
                     </p>
                     <span class="text-sm font-bold text-blue-600">{{ number_format($progressPercentage, 1) }}%</span>
                 </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
-                    <div class="bg-gradient-to-r from-blue-500 to-blue-600 h-4 rounded-full transition-all duration-500 ease-out"
-                         style="width: {{ max(2, min(100, $progressPercentage)) }}%; min-width: {{ $progressPercentage > 0 ? '8px' : '0px' }};">
-                    </div>
+                <div style="width: 100%; height: 20px; background-color: #e5e7eb; border-radius: 10px; overflow: hidden;">
+                    <div style="width: {{ max(1, min(100, $progressPercentage)) }}%; height: 20px; background: linear-gradient(90deg, #3b82f6, #1d4ed8); border-radius: 10px; transition: width 0.5s ease;"></div>
                 </div>
             </div>
 
@@ -26,10 +24,8 @@
                     </p>
                     <span class="text-sm font-bold text-green-600">{{ number_format($schoolProgressPercentage, 1) }}%</span>
                 </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
-                    <div class="bg-gradient-to-r from-green-500 to-green-600 h-4 rounded-full transition-all duration-500 ease-out"
-                         style="width: {{ max(2, min(100, $schoolProgressPercentage)) }}%; min-width: {{ $schoolProgressPercentage > 0 ? '8px' : '0px' }};">
-                    </div>
+                <div style="width: 100%; height: 20px; background-color: #e5e7eb; border-radius: 10px; overflow: hidden;">
+                    <div style="width: {{ max(1, min(100, $schoolProgressPercentage)) }}%; height: 20px; background: linear-gradient(90deg, #10b981, #047857); border-radius: 10px; transition: width 0.5s ease;"></div>
                 </div>
             </div>
 
@@ -41,21 +37,19 @@
                     </p>
                     <span class="text-sm font-bold text-yellow-600">{{ number_format($learningProgressPercentage, 1) }}%</span>
                 </div>
-                <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-4 overflow-hidden">
-                    <div class="bg-gradient-to-r from-yellow-400 to-yellow-500 h-4 rounded-full transition-all duration-500 ease-out"
-                         style="width: {{ max(2, min(100, $learningProgressPercentage)) }}%; min-width: {{ $learningProgressPercentage > 0 ? '8px' : '0px' }};">
-                    </div>
+                <div style="width: 100%; height: 20px; background-color: #e5e7eb; border-radius: 10px; overflow: hidden;">
+                    <div style="width: {{ max(1, min(100, $learningProgressPercentage)) }}%; height: 20px; background: linear-gradient(90deg, #f59e0b, #d97706); border-radius: 10px; transition: width 0.5s ease;"></div>
                 </div>
             </div>
 
-            {{-- Debug info (quitar en producción) --}}
+            {{-- Debug info (opcional) --}}
             @if(config('app.debug'))
                 <div class="mt-4 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg text-xs text-gray-600 dark:text-gray-400">
-                    <strong>Debug:</strong> 
-                    Total: {{ $totalHours }}h | 
-                    Progress: {{ $progressPercentage }}% | 
-                    School: {{ $schoolProgressPercentage }}% |
-                    Width: {{ max(2, min(100, $progressPercentage)) }}%
+                    <strong>Debug Info:</strong><br>
+                    Total Hours: {{ $totalHours }} ({{ number_format($progressPercentage, 1) }}%)<br>
+                    School Hours: {{ $schoolHours }} ({{ number_format($schoolProgressPercentage, 1) }}%)<br>
+                    Learning Hours: {{ $learningHours }} ({{ number_format($learningProgressPercentage, 1) }}%)<br>
+                    User ID: {{ Auth::id() ?? 'No auth' }}
                 </div>
             @endif
         </div>
