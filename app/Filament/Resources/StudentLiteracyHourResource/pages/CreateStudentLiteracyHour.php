@@ -13,6 +13,8 @@ class CreateStudentLiteracyHour extends CreateRecord
     {
         // Auto-asigna el estudiante logueado
         $data['id_student'] = \Illuminate\Support\Facades\Auth::check() ? \Illuminate\Support\Facades\Auth::user()->id : null;
+        $data['validated'] = false; // Solo esta línea
+        
         return $data;
     }
 
@@ -22,4 +24,3 @@ class CreateStudentLiteracyHour extends CreateRecord
         return $this->getResource()::getUrl('index');
     }
 }
-
