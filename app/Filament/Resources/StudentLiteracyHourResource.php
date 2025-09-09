@@ -70,6 +70,20 @@ class StudentLiteracyHourResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\BooleanColumn::make('validated')
+                    ->label('Validada')
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
+                                
+                Tables\Columns\TextColumn::make('comments')
+                    ->label('Comentarios')
+                    ->limit(50)
+                    ->toggleable(),    
+
+
+                    
                 Tables\Columns\TextColumn::make('date_time_start')
                     ->label('Inicio')
                     ->dateTime('d/m/Y H:i')
@@ -79,18 +93,8 @@ class StudentLiteracyHourResource extends Resource
                     ->label('Fin')
                     ->dateTime('d/m/Y H:i')
                     ->sortable(),
-                
-                Tables\Columns\TextColumn::make('duration')
-                    ->label('Duración')
-                    ->getStateUsing(function ($record) {
-                        $start = \Carbon\Carbon::parse($record->date_time_start);
-                        $end = \Carbon\Carbon::parse($record->date_time_end);
-                        $hours = $end->diffInMinutes($start) / 60;
-                        return number_format($hours, 1) . 'h';
-                    })
-                    ->badge()
-                    ->color('success'),
-                
+
+
                 Tables\Columns\TextColumn::make('hour_type')
                     ->label('Tipo')
                     ->formatStateUsing(fn (string $state): string => $state === 'school' ? 'Colegio' : 'Aprendizaje')
@@ -103,27 +107,41 @@ class StudentLiteracyHourResource extends Resource
                 
                 Tables\Columns\TextColumn::make('teacher.name')
                     ->label('Profesor')
-                    ->searchable()
                     ->toggleable(),
                 
                 Tables\Columns\TextColumn::make('zone.name')
                     ->label('Zona')
-                    ->searchable()
                     ->toggleable(),
+
                 
-                Tables\Columns\TextColumn::make('comments')
-                    ->label('Comentarios')
-                    ->limit(50)
-                    ->toggleable(),
                 
-                Tables\Columns\BooleanColumn::make('validated')
-                    ->label('Validada')
-                    ->trueIcon('heroicon-o-check-circle')
-                    ->falseIcon('heroicon-o-x-circle')
-                    ->trueColor('success')
-                    ->falseColor('danger'),
             ])
             ->filters([
+
+
+            Tables\Filters\SelectFilter::make('sort_by')
+                    ->label('Ordenar por')
+                    ->options([
+                        'recent' => 'Más Recientes',
+                        'oldest' => 'Más Antiguas',
+                        'validated_first' => 'Validadas Primero',
+                        'not_validated_first' => 'No Validadas Primero',
+                    ])
+                    ->default('recent')
+                    ->query(function ($query, array $data) {
+                        if (! $data['value']) {
+                            return $query;
+                        }
+                        
+                        return match ($data['value']) {
+                            'recent' => $query->orderBy('created_at', 'desc'),
+                            'oldest' => $query->orderBy('created_at', 'asc'),
+                            'validated_first' => $query->orderBy('validated', 'desc')->orderBy('created_at', 'desc'),
+                            'not_validated_first' => $query->orderBy('validated', 'asc')->orderBy('created_at', 'desc'),
+                            default => $query,
+                        };
+                    }),
+
                 Tables\Filters\SelectFilter::make('hour_type')
                     ->label('Tipo de Hora')
                     ->options([
@@ -131,14 +149,10 @@ class StudentLiteracyHourResource extends Resource
                         'learning' => 'Aprendizaje',
                     ]),
                 
-                Tables\Filters\Filter::make('validated')
-                    ->label('Solo Validadas')
-                    ->query(fn ($query) => $query->where('validated', true)),
                 
-                Tables\Filters\Filter::make('not_validated')
-                    ->label('No Validadas')
-                    ->query(fn ($query) => $query->where('validated', false)),
+                
             ])
+            
             ->actions([
                 Tables\Actions\EditAction::make()
                     ->visible(fn ($record) => !$record->validated),

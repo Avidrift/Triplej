@@ -67,32 +67,59 @@ class LiteracyHourResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('zone.name')->label('Zona'),
-                Tables\Columns\TextColumn::make('student.name')->label('Estudiante'),
-                Tables\Columns\TextColumn::make('teacher.name')->label('Profesor'),
-                Tables\Columns\TextColumn::make('date_time_start')->label('Inicio'),
-                Tables\Columns\TextColumn::make('date_time_end')->label('Fin'),
+                Tables\Columns\TextColumn::make('zone.name')
+                    ->label('Zona') 
+                    ->toggleable(),    
+                Tables\Columns\TextColumn::make('student.name')->label('Estudiante')                     ->toggleable(),                    Tables\Columns\TextColumn::make('teacher.name')->label('Profesor'),
+                Tables\Columns\TextColumn::make('date_time_start')->label('Inicio')                     ->toggleable(),    
+                Tables\Columns\TextColumn::make('date_time_end')->label('Fin')                     ->toggleable(),
+                                Tables\Columns\TextColumn::make('duration')
+                    ->label('Duración')
+                    ->getStateUsing(function ($record) {
+                        $start = \Carbon\Carbon::parse($record->date_time_start);
+                        $end = \Carbon\Carbon::parse($record->date_time_end);
+                        $hours = $end->diffInMinutes($start) / 60;
+                        return number_format($hours, 1) . 'h';
+                    })
+                    ->badge()
+                    ->color('success')
+                    ->toggleable(),    
                 // Usa ToggleColumn sin iconos personalizados para evitar el error
                 Tables\Columns\ToggleColumn::make('validated')
                     ->label('Validado')
                     ->disabled(fn ($record) => !\Filament\Facades\Filament::auth()?->user() instanceof \App\Models\Teacher),
-                Tables\Columns\TextColumn::make('comments')->label('Descripción')->limit(30),
+                Tables\Columns\TextColumn::make('comments')->label('Descripción')->limit(30)                    ->toggleable(),    
             ])
             ->filters([
+                Tables\Filters\SelectFilter::make('sort_by')
+                    ->label('Ordenar por')
+                    ->options([
+                        'recent' => 'Más Recientes',
+                        'oldest' => 'Más Antiguas',
+                        'validated_first' => 'Validadas Primero',
+                        'not_validated_first' => 'No Validadas Primero',
+                    ])
+                    ->default('recent')
+                    ->query(function ($query, array $data) {
+                        if (! $data['value']) {
+                            return $query;
+                        }
+                        
+                        return match ($data['value']) {
+                            'recent' => $query->orderBy('created_at', 'desc'),
+                            'oldest' => $query->orderBy('created_at', 'asc'),
+                            'validated_first' => $query->orderBy('validated', 'desc')->orderBy('created_at', 'desc'),
+                            'not_validated_first' => $query->orderBy('validated', 'asc')->orderBy('created_at', 'desc'),
+                            default => $query,
+                        };
+                    }),
+
                 Tables\Filters\SelectFilter::make('hour_type')
                     ->label('Tipo de Hora')
                     ->options([
                         'school' => 'Colegio',
                         'learning' => 'Aprendizaje',
                     ]),
-                
-                Tables\Filters\Filter::make('validated')
-                    ->label('Solo Validadas')
-                    ->query(fn ($query) => $query->where('validated', true)),
-                
-                Tables\Filters\Filter::make('not_validated')
-                    ->label('No Validadas')
-                    ->query(fn ($query) => $query->where('validated', false)),
             ])
             ->actions([
                 Tables\Actions\EditAction::make()
@@ -120,19 +147,22 @@ class LiteracyHourResource extends Resource
     public static function getEloquentQuery(): Builder
     {
         $user = \Filament\Facades\Filament::auth()?->user();
+        
         // Admin ve todo
         if ($user && $user instanceof \App\Models\Admin) {
             return parent::getEloquentQuery();
         }
-        // Maestro: solo ve horas de sus estudiantes
+        
+        // Maestro: solo ve horas donde él está asignado como profesor en el formulario
         if ($user && $user instanceof \App\Models\Teacher) {
-            $studentIds = $user->students()->pluck('id');
-            return parent::getEloquentQuery()->whereIn('id_student', $studentIds);
+            return parent::getEloquentQuery()->where('id_teacher', $user->id);
         }
+        
         // Estudiante: solo ve sus propias horas
         if ($user && $user instanceof \App\Models\Student) {
             return parent::getEloquentQuery()->where('id_student', $user->id);
         }
+        
         // Por defecto, no mostrar nada
         return parent::getEloquentQuery()->whereRaw('1=0');
     }
