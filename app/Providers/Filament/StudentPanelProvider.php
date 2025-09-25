@@ -30,9 +30,21 @@ class StudentPanelProvider extends PanelProvider
             ->path('student')
             ->login()
             ->authGuard('student')
-            ->brandName('Acceso de Estudiantes')
+            ->brandName('tripleJ - Estudiante')
             ->colors([
-                'primary' => Color::Gray,
+                'primary' => [
+                    50 => '248, 245, 255',   // Muy claro
+                    100 => '237, 226, 255',  // Claro
+                    200 => '221, 198, 255',  // 
+                    300 => '196, 155, 255',  //
+                    400 => '167, 104, 255',  //
+                    500 => '139, 69, 255',   // Base - púrpura vibrante
+                    600 => '124, 58, 237',   // 
+                    700 => '109, 48, 219',   //
+                    800 => '88, 40, 181',    //
+                    900 => '70, 35, 143',    // Muy oscuro
+                    950 => '48, 25, 92',     // Más oscuro
+                ],
             ])
             ->discoverResources(in: app_path('Filament/Student/Resources'), for: 'App\\Filament\\Student\\Resources')
             ->discoverPages(in: app_path('Filament/Student/Pages'), for: 'App\\Filament\\Student\\Pages')

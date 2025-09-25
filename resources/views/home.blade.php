@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TripleJ - Gestión de Horas de Alfabetización</title>
-    <link rel="stylesheet" href="{{ asset('css/landingpage.css') }}">
+    <link rel="stylesheet" href="css/landingpage.css">
 
     <style>
         .nav-links-f {
@@ -42,6 +42,7 @@
             <li class="nav-links-f hidden"><a href="#ini" class="login-btn">Iniciar Sesión</a></li>
         </nav>
     </header>
+
 
     <!-- bnt log transition -->
     <div class="mpage" id="ini">
