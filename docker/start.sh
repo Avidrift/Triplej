@@ -23,9 +23,6 @@ php artisan config:clear
 php artisan route:clear  
 php artisan view:clear
 
-# Publicar assets de Filament
-php artisan filament:assets --force
-
 # Crear link de storage
 php artisan storage:link || true
 
