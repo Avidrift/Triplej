@@ -3,14 +3,6 @@ set -e
 
 echo "=== Starting Laravel Application ==="
 
-# Configurar Nginx con el puerto correcto
-export PORT=${PORT:-8080}
-sed "s/\${PORT}/$PORT/g" /etc/nginx/sites-available/default > /tmp/nginx.conf
-mv /tmp/nginx.conf /etc/nginx/sites-available/default
-
-# Verificar configuración de Nginx
-nginx -t
-
 # Esperar a la base de datos
 max_attempts=30
 attempt=0
@@ -35,6 +27,10 @@ php artisan view:clear
 # Crear link de storage si no existe
 php artisan storage:link || true
 
+# Verificar configuración de Nginx antes de iniciar
+echo "Testing Nginx configuration..."
+nginx -t
+
 # Iniciar servicios con Supervisor
-echo "Starting Nginx and PHP-FPM on port ${PORT:-8080}..."
+echo "Starting Nginx and PHP-FPM on port 8080..."
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
