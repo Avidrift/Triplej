@@ -41,6 +41,9 @@ COPY . .
 # Instalar dependencias de PHP
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 
+# Instalar dependencias de Node y compilar assets
+RUN npm ci && npm run build
+
 # Dar permisos
 RUN chown -R www-data:www-data /var/www/html \
     && chmod -R 775 storage bootstrap/cache
@@ -57,6 +60,6 @@ RUN sed -i 's/\r$//' /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start.sh
 
 # Exponer puerto
-EXPOSE ${PORT:-8080}
+EXPOSE 8080
 
 CMD ["/usr/local/bin/start.sh"]
