@@ -19,18 +19,23 @@ if [ $attempt -lt $max_attempts ]; then
     php artisan migrate --force
 fi
 
-# Limpiar y optimizar
+# Limpiar caches
 php artisan config:clear
 php artisan route:clear
 php artisan view:clear
+php artisan cache:clear
 
-# Crear link de storage si no existe
+# Optimizar para producción
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
+
+# Crear link de storage
 php artisan storage:link || true
 
-# Verificar configuración de Nginx antes de iniciar
-echo "Testing Nginx configuration..."
+# Verificar Nginx
 nginx -t
 
-# Iniciar servicios con Supervisor
+# Iniciar servicios
 echo "Starting Nginx and PHP-FPM on port 8080..."
 exec /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
