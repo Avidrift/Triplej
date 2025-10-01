@@ -1,28 +1,27 @@
 #!/bin/bash
 set -e
 
-echo "Waiting for database..."
+echo "=== Starting Laravel Application ==="
 
+# Esperar a la base de datos (máximo 30 intentos = 1 minuto)
 max_attempts=30
 attempt=0
 
 until php artisan db:show > /dev/null 2>&1 || [ $attempt -eq $max_attempts ]; do
-    echo "Database not ready, waiting... (attempt $((attempt+1))/$max_attempts)"
+    echo "Waiting for database... ($((attempt+1))/$max_attempts)"
     sleep 2
     attempt=$((attempt+1))
 done
 
-if [ $attempt -eq $max_attempts ]; then
-    echo "Database not available after $max_attempts attempts"
-    echo "Starting server without migrations..."
-else
-    echo "Database ready! Running migrations..."
+# Ejecutar migraciones si la DB está lista
+if [ $attempt -lt $max_attempts ]; then
+    echo "Running migrations..."
     php artisan migrate --force
-    echo "Migrations completed successfully!"
 fi
 
-echo "Caching configuration..."
-php artisan config:cache
+# Limpiar cache de configuración (NO cachear por el error de Closure)
+php artisan config:clear
 
+# Iniciar servidor
 echo "Starting server on port ${PORT:-8080}..."
 exec php artisan serve --host=0.0.0.0 --port=${PORT:-8080}

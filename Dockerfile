@@ -39,15 +39,19 @@ RUN composer install --optimize-autoloader --no-dev --no-interaction
 # Dar permisos a storage y bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
 
-# Cachear configuración de Laravel
-RUN php artisan config:cache || true && \
-    php artisan route:cache || true && \
-    php artisan view:cache || true
+# Copiar el script de inicio y convertir line endings
+COPY start.sh /usr/local/bin/start.sh
+RUN sed -i 's/\r$//' /usr/local/bin/start.sh && \
+    chmod +x /usr/local/bin/start.sh
+
+# NO cachear nada en build time, solo en runtime
 
 # Exponer puerto (Railway usa variable $PORT)
-EXPOSE 8080
+EXPOSE ${PORT:-8080}
 
-# Comando de inicio
-CMD php artisan migrate --force && \
-    php artisan config:cache && \
-    php artisan serve --host=0.0.0.0 --port=${PORT:-8080}
+# Healthcheck para verificar que el servidor esté respondiendo
+HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
+  CMD curl -f http://localhost:${PORT:-8080}/up || exit 1
+
+# Usar el script de inicio
+CMD ["/usr/local/bin/start.sh"]
