@@ -4,8 +4,12 @@ set -e
 echo "=== Starting Laravel Application ==="
 
 # Configurar Nginx con el puerto correcto
-envsubst '${PORT}' < /etc/nginx/sites-available/default > /etc/nginx/sites-available/default.tmp
-mv /etc/nginx/sites-available/default.tmp /etc/nginx/sites-available/default
+export PORT=${PORT:-8080}
+sed "s/\${PORT}/$PORT/g" /etc/nginx/sites-available/default > /tmp/nginx.conf
+mv /tmp/nginx.conf /etc/nginx/sites-available/default
+
+# Verificar configuración de Nginx
+nginx -t
 
 # Esperar a la base de datos
 max_attempts=30
