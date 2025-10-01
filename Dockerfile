@@ -1,4 +1,4 @@
-FROM php:8.3-cli
+FROM php:8.3-fpm
 
 # Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
@@ -11,6 +11,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     zip \
     unzip \
+    nginx \
+    supervisor \
+    gettext-base \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo_mysql \
@@ -36,22 +39,22 @@ COPY . .
 # Instalar dependencias de PHP
 RUN composer install --optimize-autoloader --no-dev --no-interaction
 
-# Dar permisos a storage y bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# Dar permisos
+RUN chown -R www-data:www-data /var/www/html \
+    && chmod -R 775 storage bootstrap/cache
 
-# Copiar el script de inicio y convertir line endings
-COPY start.sh /usr/local/bin/start.sh
+# Configurar Nginx
+COPY docker/nginx.conf /etc/nginx/sites-available/default
+
+# Configurar Supervisor
+COPY docker/supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Copiar script de inicio
+COPY docker/start.sh /usr/local/bin/start.sh
 RUN sed -i 's/\r$//' /usr/local/bin/start.sh && \
     chmod +x /usr/local/bin/start.sh
 
-# NO cachear nada en build time, solo en runtime
-
-# Exponer puerto (Railway usa variable $PORT)
+# Exponer puerto
 EXPOSE ${PORT:-8080}
 
-# Healthcheck para verificar que el servidor esté respondiendo
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s \
-  CMD curl -f http://localhost:${PORT:-8080}/up || exit 1
-
-# Usar el script de inicio
 CMD ["/usr/local/bin/start.sh"]
