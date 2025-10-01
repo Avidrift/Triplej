@@ -1,6 +1,6 @@
 FROM php:8.3-fpm
 
-# Instalar dependencias del sistema
+# Instalar dependencias del sistema y Node.js
 RUN apt-get update && apt-get install -y \
     git \
     curl \
@@ -14,6 +14,8 @@ RUN apt-get update && apt-get install -y \
     nginx \
     supervisor \
     gettext-base \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && docker-php-ext-configure intl \
     && docker-php-ext-install \
     pdo_mysql \
