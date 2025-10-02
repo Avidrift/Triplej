@@ -18,7 +18,7 @@ if [ $attempt -lt $max_attempts ]; then
     php artisan migrate --force
 fi
 
-# IMPORTANTE: Usar cache en lugar de clear en producción
+# Cachear configuración
 php artisan config:cache
 php artisan route:cache
 php artisan view:cache
