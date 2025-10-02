@@ -18,13 +18,16 @@ if [ $attempt -lt $max_attempts ]; then
     php artisan migrate --force
 fi
 
-# Limpiar caches
-php artisan config:clear
-php artisan route:clear  
-php artisan view:clear
+# IMPORTANTE: Usar cache en lugar de clear en producción
+php artisan config:cache
+php artisan route:cache
+php artisan view:cache
 
 # Crear link de storage
 php artisan storage:link || true
+
+# Optimizar Filament
+php artisan filament:optimize || true
 
 # Iniciar servicios
 nginx -t
