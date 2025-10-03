@@ -3,6 +3,10 @@ set -e
 
 echo "=== Starting Laravel Application ==="
 
+# Regenerar autoload por si acaso
+echo "Regenerating autoload..."
+composer dump-autoload --optimize
+
 # Esperar a la base de datos
 max_attempts=30
 attempt=0
@@ -49,9 +53,17 @@ echo "Setting permissions..."
 chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
+# Crear directorios necesarios
+mkdir -p /var/www/html/storage/logs
+mkdir -p /var/www/html/storage/framework/{sessions,views,cache}
+chown -R www-data:www-data /var/www/html/storage
+
 # Verificar configuración de Nginx
 echo "Testing Nginx configuration..."
 nginx -t
+
+# Mostrar últimos logs de Laravel en caso de errores
+echo "Laravel log location: storage/logs/laravel.log"
 
 # Iniciar supervisord en foreground
 echo "Starting services via Supervisor..."
