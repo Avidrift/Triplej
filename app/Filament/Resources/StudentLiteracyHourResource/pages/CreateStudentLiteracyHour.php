@@ -11,7 +11,7 @@ class CreateStudentLiteracyHour extends CreateRecord
 
     protected function mutateFormDataBeforeCreate(array $data): array
     {
-        // Auto-asigna el estudiante logueado
+        // Auto-asigna el estudiante logueado(pueba)
         $data['id_student'] = \Illuminate\Support\Facades\Auth::check() ? \Illuminate\Support\Facades\Auth::user()->id : null;
         $data['validated'] = false; // Solo esta línea
         
