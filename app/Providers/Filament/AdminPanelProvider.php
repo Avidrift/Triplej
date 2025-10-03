@@ -27,6 +27,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+            ->brandName('TripleJ - Administrador')
             ->colors([
                 'primary' => [
                     50 => '248, 245, 255',   // Muy claro

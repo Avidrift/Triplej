@@ -30,7 +30,7 @@ class StudentPanelProvider extends PanelProvider
             ->path('student')
             ->login()
             ->authGuard('student')
-            ->brandName('Acceso de Estudiantes')
+            ->brandName('tripleJ - Estudiante')
             ->colors([
                 'primary' => [
                     50 => '248, 245, 255',   // Muy claro

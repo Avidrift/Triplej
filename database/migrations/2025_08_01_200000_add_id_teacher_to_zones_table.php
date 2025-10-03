@@ -12,6 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('zones', function (Blueprint $table) {
+            // Verificar si la columna NO existe antes de agregarla
             if (!Schema::hasColumn('zones', 'id_teacher')) {
                 $table->unsignedBigInteger('id_teacher')->nullable()->after('id_company');
                 $table->foreign('id_teacher')->references('id')->on('teachers')->onDelete('cascade');
@@ -25,8 +26,11 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('zones', function (Blueprint $table) {
-            $table->dropForeign(['id_teacher']);
-            $table->dropColumn('id_teacher');
+            // Verificar si la columna existe antes de eliminarla
+            if (Schema::hasColumn('zones', 'id_teacher')) {
+                $table->dropForeign(['id_teacher']);
+                $table->dropColumn('id_teacher');
+            }
         });
     }
 };
