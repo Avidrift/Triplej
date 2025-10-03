@@ -1,0 +1,25 @@
+0b84daf | jpfg2007 | 2025-09-08 | Poyecto terminado; debbuging listo
+24010b7 | jpfg2007 | 2025-09-05 | Ultima subida, codigo completo
+33dc7d0 | jpfg2007 | 2025-09-05 | Ultima subida, codigo completo, todo melo ma melo
+1aaef3f | jpfg2007 | 2025-09-05 | Ultima subida, codigo completo, todo melo ma melo
+17d8462 | jpfg2007 | 2025-08-21 | fix: ojala ultimo intento de problemas con vite
+d159fa0 | jpfg2007 | 2025-08-21 | fix: ojala ultimo intento de problemas con vite
+71140d9 | jpfg2007 | 2025-08-21 | fix: ojala ultimo intento de problemas con vite
+4cb574b | jpfg2007 | 2025-08-21 | fix:tercer intento de problemas con vite
+9b54a3b | jpfg2007 | 2025-08-21 | fix:tercer intento de problemas con vite
+da288dd | jpfg2007 | 2025-08-21 | fix:tercer intento de problemas con vite
+ab32b10 | jpfg2007 | 2025-08-21 | fix:tercer intento de problemas con vite
+204f678 | jpfg2007 | 2025-08-21 | fix: segundo intento de problemas con vite
+4d9cc37 | jpfg2007 | 2025-08-21 | fix: problemas con vite.config.js solucionados
+d1e98b9 | jpfg2007 | 2025-08-21 | proyecto en estado funcional
+49c14d3 | Avidrift | 2025-08-15 | cambios en el formulario para registrar horas, ahora es funcional, arreglo de errores varios en la hoja de alfabetizacion
+63f025b | roser0 | 2025-08-01 | Modificaciones varias
+457fbf5 | Avidrift | 2025-07-18 | commit da proba
+dbae1ef | rosero | 2025-07-03 | Se añaden funcionalidades para cada vista, además de poner en funcionamiento previo las opciones de añadir, ver, aprobar horas de alfabetización, entre otras
+225aefc | Dragion9 | 2025-06-13 | Se crean los paneles studen y teacher con sus metodos de ingreso, se implementa guard y se mantiene en construcción el CRUD
+5d5a8de | Dragion9 | 2025-05-30 | Se empiezan a crear los archivos filament y sus recursos
+b1bd99c | rosero | 2025-05-29 | Actualización en los modelos, se crean las relaciones. Además, se arregla codigo en Admin, haciendo que Admin sea ahora un rol y un tipo especial de 'User'
+082f3a3 | rosero | 2025-05-17 | Corrección en las migraciones, sintaxis, relaciones, etc. Ahora permite hacer la migración
+88b4076 | Dragion9 | 2025-05-16 | Problación, se agregan cosas a las migraciones
+568f28d | Dragion9 | 2025-05-16 | Nuevas migraciones y modelos
+9452522 | Dragion9 | 2025-05-16 | First Commit
