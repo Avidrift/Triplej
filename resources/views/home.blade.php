@@ -50,10 +50,10 @@
             <div>
                 <h2>Iniciar Sesión</h2>
                 <div class="sinicio">
-                    <a href="/teacher" class="btn-primary">Maestro</a> <br> <br>
+                    <a href="/comminSoon" class="btn-primary">Maestro</a> <br> <br>
                 </div>
                 <div class="sinicio">
-                    <a href="/student" class="btn-primary">Estudiante</a> <br> <br>
+                    <a href="/comminSoon" class="btn-primary">Estudiante</a> <br> <br>
                 </div>
             </div>
         </div>

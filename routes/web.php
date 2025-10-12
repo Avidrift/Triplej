@@ -13,6 +13,10 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::get('/comminSoon', function () {
+    return view('comingSoon');
+});
+
 // Rutas para panel de profesores
 Route::get('/literacy-hours/teacher/create', [LiteracyHourController::class, 'createForTeacher'])->name('literacy_hours.teacher.create');
 Route::post('/literacy-hours/teacher/store', [LiteracyHourController::class, 'storeForTeacher'])->name('literacy_hours.teacher.store');
